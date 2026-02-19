@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - DEBUG=False
+      - HOST=0.0.0.0
+      - PORT=8000
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - AWS_REGION=us-east-1
+      - S3_BUCKET_NAME=clarity-in-care-images
+      - DATABASE_URL=sqlite:///./clarity_in_care.db
+    volumes:
+      - ./models:/app/models
+      - ./data:/app/data
+    networks:
+      - clarity-network
+
+networks:
+  clarity-network:
+    driver: bridge
